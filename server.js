@@ -18,7 +18,7 @@ const pool = new Pool({
     password: '@k2so#',
     port: 5432,
 });
-pool.query('SELECT * from k2so.teste', (err, res) => {
+pool.query('SELECT * from teste', (err, res) => {
     console.log(res.rows);
     pool.end();
 })
