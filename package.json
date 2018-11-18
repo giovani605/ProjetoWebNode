@@ -1,0 +1,26 @@
+{
+  "name": "projetowebnode",
+  "version": "1.0.0",
+  "description": "Projeto WEb",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "nodemon": "^1.18.6",
+    "pg": "^7.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giovani605/ProjetoWebNode.git"
+  },
+  "author": "Giovani Bossoni, José Moscardi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/giovani605/ProjetoWebNode/issues"
+  },
+  "homepage": "https://github.com/giovani605/ProjetoWebNode#readme"
+}
