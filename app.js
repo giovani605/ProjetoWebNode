@@ -7,6 +7,8 @@ var imagemREST = require("./rotas/ImagemREST");
 // para poder mandar dados para o angular
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
+
+
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -20,6 +22,7 @@ app.use((req, res, next) => {
     console.log("Headers funcionando");
     next();
 });
+app.use('/static', express.static('uploads'));
 
 
 app.use('/auth', auth);

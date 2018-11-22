@@ -9,9 +9,15 @@ var multer = require('multer')
 var upload = multer({ dest: 'uploads/' })
 
 // Get imagem
-router.get("/", (req, res, next) => {
-    console.log("ola");
-    res.send("ok");
+router.get("/:id", (req, res, next) => {
+    
+     
+    fs.readFile("uploads/"+req.params.id,(err,data)=>{
+        if (err) throw err;
+        res.writeHead(200, {'Content-Type': 'image/png' });
+        res.end(data, 'binary');
+        //res.status(200).send(data);
+    });
 });
 
 // Salva a imagem
