@@ -2,9 +2,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var auth = require("./rotas/AuthREST");
+var imagemREST = require("./rotas/ImagemREST");
 
 // para poder mandar dados para o angular
 app.use(bodyParser.json());
+app.use(bodyParser.raw());
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -21,6 +23,7 @@ app.use((req, res, next) => {
 
 
 app.use('/auth', auth);
+app.use("/imagem", imagemREST);
 
 
 module.exports = app;

@@ -1,13 +1,5 @@
 "use strict"
 
-
-
-
-
-
-
-
-
 const { Pool, Client } = require('pg')
 
 const pool = new Pool({
@@ -20,8 +12,10 @@ const pool = new Pool({
 pool.query('SELECT * from teste', (err, res) => {
     console.log(res.rows);
     pool.end();
-})
+});
 
+
+exports.conexao = pool;
 
 
 
