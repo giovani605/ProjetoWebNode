@@ -9,13 +9,13 @@ const pool = new Pool({
     password: '@k2so#',
     port: 5432,
 });
-pool.query('SELECT * from teste', (err, res) => {
-    console.log(res.rows);
-    pool.end();
-});
 
+function inserirAspas(a){
+  return "'" + a + "'";
+}
 
 exports.conexao = pool;
+exports.inserirAspas = inserirAspas;
 
 
 

@@ -2,14 +2,40 @@
 
 const Banco = require("./bancoDados");
 const conexao = Banco.conexao;
+var inserirAspas = Banco.inserirAspas;
 
 // aqui faz as query
-function bancoTeste(callback){
-    conexao.query('SELECT * from teste', (err, res) => {
+function buscarTodosUser(callback){
+    conexao.query('select * from usuario', (err, res) => {
         console.log("Banco : ");
         console.log(res.rows);
+        callback(callback);
     });
 }
 
+// Dados no seguinte formato
+
+function InserirUser(dados ,callback){
+
+    var query = "INSERT INTO usuario(nome, senha, login, cidades_id)" +
+    " VALUES ("+ inserirAspas(dados["nome"])+ "," + inserirAspas(dados["senha"]) + "," + inserirAspas(dados["login"]) + ",1);";
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if(err){
+            console.log("problemas : ");
+            console.log(err);
+            callback(err,"Não foi possivel inserir o Usuario");
+            return;
+        }
+        console.log("Inserido : ");
+        console.log(res);
+        callback(res,"Usuario inserido com sucesso");
+        return;
+    });
+}
+
+
+exports.buscarTodosUser = buscarTodosUser;
+exports.InserirUser = InserirUser;
 
 // exporta elas
