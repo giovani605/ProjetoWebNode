@@ -6,8 +6,7 @@ var imagemREST = require("./rotas/ImagemREST");
 var usuarioREST = require("./rotas/UsuarioREST");
 
 // para poder mandar dados para o angular
-app.use(bodyParser.json());
-
+app.use("/",bodyParser.json());
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
@@ -22,8 +21,6 @@ app.use((req, res, next) => {
     next();
 });
 app.use('/static', express.static('uploads'));
-
-
 app.use('/auth', auth);
 app.use("/imagem", imagemREST);
 app.use("/usuario", usuarioREST);

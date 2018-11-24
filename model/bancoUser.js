@@ -12,6 +12,19 @@ function buscarTodosUser(callback){
         callback(callback);
     });
 }
+function buscarUsuarioLogin(login, callback){
+    var query = "select * from usuario where login =" + inserirAspas(login);
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        console.log("Banco : ");
+        console.log(res.rows[0]);
+        callback(res.rows[0]);
+    });
+
+
+}
+
+
 
 // Dados no seguinte formato
 
@@ -37,5 +50,5 @@ function InserirUser(dados ,callback){
 
 exports.buscarTodosUser = buscarTodosUser;
 exports.InserirUser = InserirUser;
-
+exports.buscarUsuarioLogin = buscarUsuarioLogin;
 // exporta elas
