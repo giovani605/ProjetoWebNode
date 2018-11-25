@@ -19,9 +19,10 @@ router.post("/registrar", upload.single('imagem'), (req, res, next) => {
     // usar esse arquivo para grava no banco
     var dados = JSON.parse(req.body["dados"]);
     bancoPrato.inserirPrato(dados["restaurante_idrestaurante"], req.file.filename,
-        dados, (resultado) => {
+        dados, (resultado,flag) => {
             res.status(200).send({
                 "mensagem": "OK",
+                "flag": flag,
                 "dados": resultado
             });
         });

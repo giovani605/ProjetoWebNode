@@ -29,4 +29,25 @@ function inserirRestaurante(idGerente, dadosRestaurante, callback) {
         return;
     });
 }
+
+function buscarRestauranteIdUser(idUser, callback){
+    var query = "SELECT r.* FROM restaurante r inner join gerente g on g.idgerente = r.gerente_idgerente "+
+    "inner join usuario u on u.idusuario = g.usuario_idusuario where u.idusuario = " + idUser ;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, "Não foi possivel inserir o Restaurante");
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows);
+        return;
+    });
+
+}
+exports.buscarRestauranteIdUser = buscarRestauranteIdUser;
+
 exports.inserirRestaurante = inserirRestaurante;

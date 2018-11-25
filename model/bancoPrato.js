@@ -14,12 +14,12 @@ function inserirPrato(idRestaurante, idImagem, dadosPratos, callback) {
         if (err) {
             console.log("problemas : ");
             console.log(err);
-            callback(err, "Não foi possivel inserir o Prato");
+            callback(err,false,"Não foi possivel inserir o Prato");
             return;
         }
         console.log("Inserido : ");
         console.log(res);
-        callback(res, "prato inserido com sucesso");
+        callback(res,true, "prato inserido com sucesso");
         return;
     });
 }
