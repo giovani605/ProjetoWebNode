@@ -6,6 +6,7 @@ var imagemREST = require("./rotas/ImagemREST");
 var usuarioREST = require("./rotas/UsuarioREST");
 var restauranteREST = require("./rotas/RestauranteREST");
 var pratoREST = require("./rotas/pratoREST");
+var feedREST = require("./rotas/feedREST");
 // para poder mandar dados para o angular
 app.use("/",bodyParser.json());
 app.use((req, res, next) => {
@@ -27,5 +28,7 @@ app.use("/imagem", imagemREST);
 app.use("/usuario", usuarioREST);
 app.use("/restaurante", restauranteREST);
 app.use("/prato", pratoREST);
+app.use("/feed", feedREST);
+
 
 module.exports = app;

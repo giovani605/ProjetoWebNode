@@ -14,6 +14,17 @@ function inserirAspas(a){
   return "'" + a + "'";
 }
 
+function formatarData(data) {
+  var a = "('";
+  a += data.getFullYear();
+  a += "-";
+  a += Number(data.getMonth() + 1);
+  a += "-";
+  a += data.getDate();
+  a += "')";
+  return a;
+}
+exports.formatarData = formatarData;
 exports.conexao = pool;
 exports.inserirAspas = inserirAspas;
 
