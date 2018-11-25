@@ -4,7 +4,8 @@ var bodyParser = require('body-parser');
 var auth = require("./rotas/AuthREST");
 var imagemREST = require("./rotas/ImagemREST");
 var usuarioREST = require("./rotas/UsuarioREST");
-var restauranteREST = require("./rotas/RestauranteREST")
+var restauranteREST = require("./rotas/RestauranteREST");
+var pratoREST = require("./rotas/pratoREST");
 // para poder mandar dados para o angular
 app.use("/",bodyParser.json());
 app.use((req, res, next) => {
@@ -25,5 +26,6 @@ app.use('/auth', auth);
 app.use("/imagem", imagemREST);
 app.use("/usuario", usuarioREST);
 app.use("/restaurante", restauranteREST);
+app.use("/prato", pratoREST);
 
 module.exports = app;
