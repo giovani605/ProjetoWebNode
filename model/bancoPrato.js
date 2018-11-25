@@ -14,13 +14,35 @@ function inserirPrato(idRestaurante, idImagem, dadosPratos, callback) {
         if (err) {
             console.log("problemas : ");
             console.log(err);
-            callback(err,false,"Não foi possivel inserir o Prato");
+            callback(err, false, "Não foi possivel inserir o Prato");
             return;
         }
         console.log("Inserido : ");
         console.log(res);
-        callback(res,true, "prato inserido com sucesso");
+        callback(res, true, "prato inserido com sucesso");
         return;
     });
 }
+function buscarPratosRestaurante(idRestaurante, callback) {
+    var query = "select * from pratos  where restaurante_idrestaurante = " + idRestaurante;
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if(res.rows.length == 0){
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Selecionado pratos : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+
+}
+
+exports.buscarPratosRestaurante = buscarPratosRestaurante;
 exports.inserirPrato = inserirPrato;

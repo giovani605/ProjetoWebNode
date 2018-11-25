@@ -28,5 +28,17 @@ router.post("/registrar", upload.single('imagem'), (req, res, next) => {
         });
 });
 
+router.get("/restaurante/:id", (req, res, next) => {
+    // recuperar parametros da imagem
+    bancoPrato.buscarPratosRestaurante(req.params.id,(resultado,flag) => {
+            res.status(200).send({
+                "mensagem": "OK",
+                "flag": flag,
+                "dados": resultado
+            });
+        });
+});
+
+
 
 module.exports = router;
