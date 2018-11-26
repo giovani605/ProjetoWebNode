@@ -40,8 +40,11 @@ function buscarUsuarioLogin(login, callback) {
     var query = "select * from usuario where login =" + inserirAspas(login);
     console.log(query);
     conexao.query(query, (err, res) => {
-        console.log("Banco : ");
+        console.log("Banco : ");        
         console.log(res.rows[0]);
+        if(res.rowCount == null){
+            console.log("a pesquisa retornou vazio, logo 'res.rows[0]' = NULL");            
+        }         
         callback(res.rows[0]);
     });
 }
