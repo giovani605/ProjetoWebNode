@@ -12,7 +12,7 @@ function inserirRestaurante(idGerente, dadosRestaurante, callback) {
         "cidades_id, nome, descricao,telefone, rua, numero) " +
         "VALUES(" + idGerente + ",1," + inserirAspas(dadosRestaurante["nome"]) + "," +
         inserirAspas(dadosRestaurante["descricao"]) +
-        "," + inserirAspas(dadosRestaurante["telefone"])+
+        "," + inserirAspas(dadosRestaurante["telefone"]) +
         "," + inserirAspas(dadosRestaurante["rua"]) +
         "," + dadosRestaurante["numero"] + ");"
     console.log(query);
@@ -30,9 +30,9 @@ function inserirRestaurante(idGerente, dadosRestaurante, callback) {
     });
 }
 
-function buscarRestauranteIdUser(idUser, callback){
-    var query = "SELECT r.* FROM restaurante r inner join gerente g on g.idgerente = r.gerente_idgerente "+
-    "inner join usuario u on u.idusuario = g.usuario_idusuario where u.idusuario = " + idUser ;
+function buscarRestauranteIdUser(idUser, callback) {
+    var query = "SELECT r.* FROM restaurante r inner join gerente g on g.idgerente = r.gerente_idgerente " +
+        "inner join usuario u on u.idusuario = g.usuario_idusuario where u.idusuario = " + idUser;
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
@@ -50,4 +50,71 @@ function buscarRestauranteIdUser(idUser, callback){
 }
 exports.buscarRestauranteIdUser = buscarRestauranteIdUser;
 
+function buscarRestauranteIdUserFuncionario(idUser, callback) {
+    var query = "SELECT r.* FROM restaurante r inner join gerente g on g.idgerente = r.gerente_idgerente " +
+        "inner join colaborador u on u.idgerente = g.idgerente where u.idusuario = " + idUser;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, "Não foi possivel inserir o Restaurante");
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows);
+        return;
+    });
+}
+
+function isColaborador(idUser, callback) {
+    var query = "SELECT * FROM colaborador where idusuario = " + idUser;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+}
+function isGerente(idUser, callback) {
+    var query = "SELECT * FROM gerente where idusuario = " + idUser;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+}
+
+
+exports.isColaborador = isColaborador;
+exports.isGerente = isGerente;
+exports.buscarRestauranteIdUserFuncionario = buscarRestauranteIdUserFuncionario;
 exports.inserirRestaurante = inserirRestaurante;

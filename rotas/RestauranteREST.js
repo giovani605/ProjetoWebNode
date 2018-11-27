@@ -9,20 +9,32 @@ var bancoRestaurante = require("../model/bancoRestaurante");
 router.get("/usuario/:id", (req, res, next) => {
     bancoRestaurante.buscarRestauranteIdUser(req.params.id, (resultado) => {
         // a flag indica se encontrou ou nao os dados
-        if(resultado.length > 0){
+        if (resultado.length > 0) {
             res.status(200).send({
                 "mensagem": "ok",
                 "flagDados": true,
                 "dados": resultado
             });
-        }else{
-            res.status(200).send({
-                "mensagem": "ok",
-                "flagDados": false,
-                "dados": resultado
-            });
+        } else {
+            bancoRestaurante.buscarRestauranteIdUserFuncionario(req.params.id, (resultado) => {
+                if (resultado.length > 0) {
+                    res.status(200).send({
+                        "mensagem": "ok",
+                        "flagDados": true,
+                        "dados": resultado
+                    });
+
+                } else {
+                    res.status(200).send({
+                        "mensagem": "ok",
+                        "flagDados": false,
+                        "dados": resultado
+                    });
+                }
+            }
+            );
+
         }
-        
     });
 
 });

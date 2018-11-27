@@ -18,7 +18,7 @@ function feedGeral(callback){
             return;
         }
         console.log("Selecionado pratos : ");
-        console.log(res.rows);
+       // console.log(res.rows);
         callback(res.rows, true);
         return;
     });
