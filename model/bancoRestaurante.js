@@ -31,7 +31,7 @@ function inserirRestaurante(idGerente, dadosRestaurante, callback) {
 }
 
 function buscarRestauranteIdUser(idUser, callback) {
-    var query = "SELECT r.* FROM restaurante r inner join gerente g on g.idgerente = r.gerente_idgerente " +
+    var query = "SELECT r.*,g.idgerente FROM restaurante r inner join gerente g on g.idgerente = r.gerente_idgerente " +
         "inner join usuario u on u.idusuario = g.usuario_idusuario where u.idusuario = " + idUser;
     console.log(query);
     conexao.query(query, (err, res) => {
@@ -51,7 +51,7 @@ function buscarRestauranteIdUser(idUser, callback) {
 exports.buscarRestauranteIdUser = buscarRestauranteIdUser;
 
 function buscarRestauranteIdUserFuncionario(idUser, callback) {
-    var query = "SELECT r.* FROM restaurante r inner join gerente g on g.idgerente = r.gerente_idgerente " +
+    var query = "SELECT r.*,g.idgerente FROM restaurante r inner join gerente g on g.idgerente = r.gerente_idgerente " +
         "inner join colaborador u on u.idgerente = g.idgerente where u.idusuario = " + idUser;
     console.log(query);
     conexao.query(query, (err, res) => {
@@ -85,8 +85,8 @@ function isColaborador(idUser, callback) {
             return;
         }
         console.log("Resultado : ");
-        console.log(res.rows);
-        callback(res.rows, true);
+        console.log(res.rows[0]);
+        callback(res.rows[0], true);
         return;
     });
 }
@@ -107,13 +107,35 @@ function isGerente(idUser, callback) {
             return;
         }
         console.log("Resultado : ");
+        console.log(res.rows[0]);
+        callback(res.rows[0], true);
+        return;
+    });
+}
+function buscarColaboradoresGerentes(idGerente,callback) {
+    var query = "select * from colaborador c inner join usuario u on c.idusuario = u.idusuario where idgerente =  " + idGerente;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
         console.log(res.rows);
         callback(res.rows, true);
         return;
     });
+
 }
-
-
+exports.buscarColaboradoresGerentes = buscarColaboradoresGerentes;
 exports.isColaborador = isColaborador;
 exports.isGerente = isGerente;
 exports.buscarRestauranteIdUserFuncionario = buscarRestauranteIdUserFuncionario;

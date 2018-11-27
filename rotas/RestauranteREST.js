@@ -13,7 +13,10 @@ router.get("/usuario/:id", (req, res, next) => {
             res.status(200).send({
                 "mensagem": "ok",
                 "flagDados": true,
-                "dados": resultado
+                "dados": resultado,
+                "flagGerente": true,
+                "flagColaborador": true,
+                "idGerente": resultado[0]["idgerente"]
             });
         } else {
             bancoRestaurante.buscarRestauranteIdUserFuncionario(req.params.id, (resultado) => {
@@ -21,14 +24,20 @@ router.get("/usuario/:id", (req, res, next) => {
                     res.status(200).send({
                         "mensagem": "ok",
                         "flagDados": true,
-                        "dados": resultado
+                        "dados": resultado,
+                        "flagGerente": false,
+                        "flagColaborador": true,
+                        "idGerente": resultado[0]["idgerente"]
                     });
 
                 } else {
                     res.status(200).send({
                         "mensagem": "ok",
                         "flagDados": false,
-                        "dados": resultado
+                        "dados": resultado,
+                        "flagGerente" : false,
+                        "flagColaborador": false,
+                        "idGerente": 0
                     });
                 }
             }
@@ -52,11 +61,31 @@ router.post("/registrar", (req, res, next) => {
 });
 
 router.get("/isGerente/:id", (req, res, next) => {
-    bancoRestaurante.isGerente(req.params.id,  (resposta,flag) => {
+    bancoRestaurante.isGerente(req.params.id, (resposta, flag) => {
         res.status(200).send({
             "mensagem": "ok",
             "resposta": resposta,
-            "flag" : flag
+            "flag": flag
+        })
+    });
+});
+
+router.get("/isColaborador/:id", (req, res, next) => {
+    bancoRestaurante.isColaborador(req.params.id, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "resposta": resposta,
+            "flag": flag
+        })
+    });
+});
+
+router.get("/gerente/colaboradores/:id", (req, res, next) => {
+    bancoRestaurante.buscarColaboradoresGerentes(req.params.id, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
         })
     });
 });
