@@ -7,6 +7,8 @@ var usuarioREST = require("./rotas/UsuarioREST");
 var restauranteREST = require("./rotas/RestauranteREST");
 var pratoREST = require("./rotas/pratoREST");
 var feedREST = require("./rotas/feedREST");
+var localREST = require("./rotas/LocalREST");
+
 // para poder mandar dados para o angular
 app.use("/",bodyParser.json());
 app.use((req, res, next) => {
@@ -29,6 +31,7 @@ app.use("/usuario", usuarioREST);
 app.use("/restaurante", restauranteREST);
 app.use("/prato", pratoREST);
 app.use("/feed", feedREST);
+app.use("/local", localREST);
 
 
 module.exports = app;
