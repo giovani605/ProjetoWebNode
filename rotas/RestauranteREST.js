@@ -51,5 +51,14 @@ router.post("/registrar", (req, res, next) => {
     });
 });
 
+router.get("/isGerente/:id", (req, res, next) => {
+    bancoRestaurante.isGerente(req.params.id,  (resposta,flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "resposta": resposta,
+            "flag" : flag
+        })
+    });
+});
 
 module.exports = router;
