@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 var bancoUser = require("../model/bancoUser");
 var bancoRestaurante = require("../model/bancoRestaurante");
+var restauranteBO = require("../business/restauranteBO");
 
 // nesse arquivo fica a rota que lida com os cartoes
 router.get("/usuario/:id", (req, res, next) => {
@@ -89,5 +90,23 @@ router.get("/gerente/colaboradores/:id", (req, res, next) => {
         })
     });
 });
+
+
+
+router.post("/gerente/inserir/colaboradores", (req, res, next) => {
+    var idGerente = req.body.idGerente;
+    var idRestaurante = req.body.idRestaurante;
+    var idUser = req.body.idUser;
+
+    console.log("Inserindo Restaurante " + idGerente + " dados " + dadosRestaurante);
+    restauranteBO.inserirColaborador(idUser ,idGerente , idRestaurante, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "resposta": resposta,
+            "flag" : flag
+        })
+    });
+});
+
 
 module.exports = router;
