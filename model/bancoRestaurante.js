@@ -91,7 +91,7 @@ function isColaborador(idUser, callback) {
     });
 }
 function isGerente(idUser, callback) {
-    var query = "SELECT * FROM gerente where idusuario = " + idUser;
+    var query = "SELECT * FROM gerente where usuario_idusuario = " + idUser;
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
@@ -112,7 +112,7 @@ function isGerente(idUser, callback) {
         return;
     });
 }
-function buscarColaboradoresGerentes(idGerente,callback) {
+function buscarColaboradoresGerentes(idGerente, callback) {
     var query = "select * from colaborador c inner join usuario u on c.idusuario = u.idusuario where idgerente =  " + idGerente;
     console.log(query);
     conexao.query(query, (err, res) => {
@@ -135,6 +135,26 @@ function buscarColaboradoresGerentes(idGerente,callback) {
     });
 
 }
+
+function inserirColaborador(idUser, idGerente, callback) {
+    var query = "INSERT INTO colaborador( idgerente, idusuario) " +
+        " VALUES (" + idGerente + "," + idUser + ");";
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false, "Não foi possivel inserir o Colaborador");
+            return;
+        }
+        console.log("Inserido : ");
+        console.log(res);
+        callback(res, true, "Coladador inserido com sucesso");
+        return;
+    });
+
+}
+exports.inserirColaborador = inserirColaborador;
 exports.buscarColaboradoresGerentes = buscarColaboradoresGerentes;
 exports.isColaborador = isColaborador;
 exports.isGerente = isGerente;

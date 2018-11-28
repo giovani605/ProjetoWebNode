@@ -4,7 +4,13 @@ var banco = require("../model/bancoRestaurante");
 
 function inserirColaborador(idUser,idGerente,idRestaurente,callback){
     // testar o id de gerente
-        // se sucesso inserir o colaborador
+    banco.isGerente(idGerente, (dados,flag) => {
+        if(flag){
+            banco.inserirColaborador(idUser,idGerente,callback);
+        }else{
+            callback({},false);
+        }
+    });
 
 }
 

@@ -98,7 +98,7 @@ router.post("/gerente/inserir/colaboradores", (req, res, next) => {
     var idRestaurante = req.body.idRestaurante;
     var idUser = req.body.idUser;
 
-    console.log("Inserindo Restaurante " + idGerente + " dados " + dadosRestaurante);
+    console.log("Inserindo Colaborador " + idGerente + " iduser " + idUser);
     restauranteBO.inserirColaborador(idUser ,idGerente , idRestaurante, (resposta, flag) => {
         res.status(200).send({
             "mensagem": "ok",
