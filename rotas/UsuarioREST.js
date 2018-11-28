@@ -25,6 +25,17 @@ router.get("/by-login/:login", (req, res, next) => {
     });
 
 });
+router.get("/like/login/:login", (req, res, next) => {
+    var login = req.params.login;
+    console.log("login: " + JSON.stringify(req.body));
+    bancoUser.buscarUsuarioLoginLike(login,(resultado) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resultado
+        });
+    });
+
+});
 
 
 router.get("/gerente", (req, res, next) => {

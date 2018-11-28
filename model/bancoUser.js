@@ -33,18 +33,30 @@ function buscarGerenteIdUser(idUser, callback) {
 }
 exports.buscarGerenteIdUser = buscarGerenteIdUser;
 
-
+function buscarUsuarioLoginLike(login, callback) {
+    var query = "select * from usuario where login like " + inserirAspas(login + "%");
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        console.log("Banco : ");
+        console.log(res.rows);
+        if (res.rowCount == null) {
+            console.log("a pesquisa retornou vazio, logo 'res.rows[0]' = NULL");
+        }
+        callback(res.rows);
+    });
+}
+exports.buscarUsuarioLoginLike = buscarUsuarioLoginLike;
 
 
 function buscarUsuarioLogin(login, callback) {
     var query = "select * from usuario where login =" + inserirAspas(login);
     console.log(query);
     conexao.query(query, (err, res) => {
-        console.log("Banco : ");        
+        console.log("Banco : ");
         console.log(res.rows[0]);
-        if(res.rowCount == null){
-            console.log("a pesquisa retornou vazio, logo 'res.rows[0]' = NULL");            
-        }         
+        if (res.rowCount == null) {
+            console.log("a pesquisa retornou vazio, logo 'res.rows[0]' = NULL");
+        }
         callback(res.rows[0]);
     });
 }
