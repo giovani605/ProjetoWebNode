@@ -48,6 +48,16 @@ router.get("/usuario/:id", (req, res, next) => {
     });
 
 });
+
+router.get("/:id" ,(req, res, next) => {
+    bancoRestaurante.buscarRestauranteIdRestaurante(req.params.id, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
+        })
+    });
+});
 router.post("/registrar", (req, res, next) => {
     var idGerente = req.body.idGerente;
     var dadosRestaurante = req.body.dadosRestaurante;

@@ -4,6 +4,33 @@ const Banco = require("./bancoDados");
 const conexao = Banco.conexao;
 var inserirAspas = Banco.inserirAspas;
 
+function buscarRestauranteIdRestaurante(idRestaurante, callback){
+    var query = "SELECT * FROM restaurante where idrestaurante = " + idRestaurante;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows[0]);
+        callback(res.rows[0], true);
+        return;
+    });
+
+
+}
+exports.buscarRestauranteIdRestaurante = buscarRestauranteIdRestaurante;
+
+
 
 function inserirRestaurante(idGerente, dadosRestaurante, callback) {
     console.log("desc: " + inserirAspas(dadosRestaurante["descricao"]));

@@ -5,7 +5,7 @@ var formatarData = Banco.formatarData;
 
 // implementacao do feed inicial
 function feedGeral(callback){
-    var query = "select * from prato_dia pd inner join pratos p on p.idpratos = pd.idprato";
+    var query = "select * from prato_dia pd inner join pratos p on p.idpratos = pd.idprato ";
     conexao.query(query, (err, res) => {
         if (err) {
             console.log("problemas : ");
