@@ -46,6 +46,7 @@ router.get("/gerente", (req, res, next) => {
         });
     });
 });
+
 router.get("/gerente/:id", (req, res, next) => {
     bancoUser.buscarGerenteIdUser(req.params.id,(resultado) => {
         console.log("Gerentes " + JSON.stringify(resultado));
@@ -55,8 +56,6 @@ router.get("/gerente/:id", (req, res, next) => {
         });
     });
 });
-
-
 
 router.post("/registrar", (req, res, next) => {
     let dados = req.body;
@@ -79,6 +78,26 @@ router.post("/registrar/gerente", (req, res, next) => {
             "msg": msgSucesso,
             "resposta": resposta
         })
+    });
+});
+
+router.get("/amigos/:id", (req, res, next) => {
+    bancoUser.buscarAmigos(req.params.id,(resultado) => {
+        console.log("Amigos " + JSON.stringify(resultado));
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resultado
+        });
+    });
+});
+
+router.get("/reservas/:id", (req, res, next) => {
+    bancoUser.buscarReservas(req.params.id,(resultado) => {
+        console.log("Reservas " + JSON.stringify(resultado));
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resultado
+        });
     });
 });
 

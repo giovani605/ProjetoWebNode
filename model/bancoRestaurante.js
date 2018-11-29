@@ -181,6 +181,33 @@ function inserirColaborador(idUser, idGerente, callback) {
     });
 
 }
+// TODO
+function buscarReservasRestaurante(idRestaurante, callback) {
+    var query = "select * from colaborador c inner join usuario u on c.idusuario = u.idusuario where idgerente =  " + idGerente;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+
+}
+exports.buscarReservasRestaurante = buscarReservasRestaurante;
+
+
 exports.inserirColaborador = inserirColaborador;
 exports.buscarColaboradoresGerentes = buscarColaboradoresGerentes;
 exports.isColaborador = isColaborador;

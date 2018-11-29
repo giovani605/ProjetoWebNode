@@ -113,7 +113,31 @@ function buscarRelacaoGerente(idUser, callback) {
 exports.buscarRelacaoGerente = buscarRelacaoGerente;
 
 
+// TODO 
+function buscarAmigos(idUser, callback) {
+    var query = "select * from gerente where usuario_idusuario = " + idUser;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        console.log("Banco : ");
+        console.log(res.rows[0]);
+        callback(res.rows[0]);
+    });
 
+}
+exports.buscarAmigos = buscarAmigos;
+
+// TODO 
+function buscarReservas(idUser, callback) {
+    var query = "select * from gerente where usuario_idusuario = " + idUser;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        console.log("Banco : ");
+        console.log(res.rows[0]);
+        callback(res.rows[0]);
+    });
+
+}
+exports.buscarReservas = buscarReservas;
 
 exports.buscarTodosUser = buscarTodosUser;
 exports.InserirUser = InserirUser;

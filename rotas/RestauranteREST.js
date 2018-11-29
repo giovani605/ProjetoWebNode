@@ -102,6 +102,16 @@ router.get("/gerente/colaboradores/:id", (req, res, next) => {
 });
 
 
+router.get("/gerente/reservas/:id", (req, res, next) => {
+    bancoRestaurante.buscarReservasRestaurante(req.params.id, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
+        })
+    });
+});
+
 
 router.post("/gerente/inserir/colaboradores", (req, res, next) => {
     var idGerente = req.body.idGerente;
