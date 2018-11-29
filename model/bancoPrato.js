@@ -2,15 +2,14 @@ const Banco = require("./bancoDados");
 const conexao = Banco.conexao;
 var inserirAspas = Banco.inserirAspas;
 var formatarData = Banco.formatarData;
+var inserirBoolean = Banco.inserirBoolean;
 
-
-
-function inserirPratoDia(dadosPratoDia, callback){
-    var query = "INSERT INTO prato_dia( idprato, data_inicio, data_fim, responsavel, aprovado) " +
-        "VALUES(" + dadosPratoDia["idPrato"] + ","+  formatarData(new Date(dadosPratoDia["data_inicio"])) +  "," +
-        formatarData(new Date(dadosPratoDia["data_fim"])) + "," +
-        inserirAspas(dadosPratoDia["aprovado"]) + "," +
-        dadosPratoDia["idPrato"] + ");"
+// testar
+function inserirPratoDia(dadosPratoDia, callback) {
+    var query = "INSERT INTO prato_dia( idprato, dia, responsavel, aprovado) " +
+        "VALUES (" + dadosPratoDia["idPrato"] + "," + formatarData(new Date(dadosPratoDia["data"])) + "," +
+        inserirAspas(dadosPratoDia["responsavel"]) + "," +
+        inserirBoolean(dadosPratoDia["aprovado"]) + ", null);"
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
@@ -56,7 +55,7 @@ function buscarPratosRestaurante(idRestaurante, callback) {
             callback(err, false);
             return;
         }
-        if(res.rows.length == 0){
+        if (res.rows.length == 0) {
             callback(res.rows, false);
             return;
         }
@@ -67,7 +66,7 @@ function buscarPratosRestaurante(idRestaurante, callback) {
     });
 
 }
-function buscarPratosIdPrato(idPrato, callback){
+function buscarPratosIdPrato(idPrato, callback) {
     var query = "select * from pratos  where idpratos = " + idPrato;
     conexao.query(query, (err, res) => {
         if (err) {
@@ -76,7 +75,7 @@ function buscarPratosIdPrato(idPrato, callback){
             callback(err, false);
             return;
         }
-        if(res.rows.length == 0){
+        if (res.rows.length == 0) {
             callback(res.rows, false);
             return;
         }
@@ -88,6 +87,5 @@ function buscarPratosIdPrato(idPrato, callback){
 
 }
 exports.buscarPratosIdPrato = buscarPratosIdPrato;
-
 exports.buscarPratosRestaurante = buscarPratosRestaurante;
 exports.inserirPrato = inserirPrato;

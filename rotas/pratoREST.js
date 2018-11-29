@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require("fs");
 var bancoPrato = require("../model/bancoPrato");
+var restauranteBO = require("../business/restauranteBO");
 
 var multer = require('multer')
 var upload = multer({ dest: 'uploads/' })
@@ -61,8 +62,33 @@ router.post("/periodo/simples", (req, res, next) => {
     bancoPrato.inserirPratoDia(dados, (resultado, flag) => {
         res.status(200).send({
             "mensagem": "OK",
-            "resultado" : resultado,
-            "flag" : flag
+            "resultado": resultado,
+            "flag": flag
+        });
+    });
+
+    // bancoPrato.inserirPrato(dados["restaurante_idrestaurante"], req.file.filename,
+    //     dados, (resultado,flag) => {
+
+    //     });
+});
+
+router.post("/periodo/ciclo", (req, res, next) => {
+    // recuperar parametros da imagem
+    // usar esse arquivo para grava no banco
+    console.log("periodo ciclo");
+    console.log(req.body);
+    var dados = req.body;
+
+    var idUser = dados["iduser"];
+    var dias = dados["dias"];
+    var dados = dados["periodo"];
+
+    restauranteBO.inserirPeriodo(idUser, dias, dados, (resultado, flag) => {
+        res.status(200).send({
+            "mensagem": "OK",
+            "resultado": resultado,
+            "flag": flag
         });
     });
 

@@ -3,14 +3,14 @@
 const { Pool, Client } = require('pg')
 
 const pool = new Pool({
-    user: 'k2so',
-    host: '200.134.10.32',
-    database: 'k2so',
-    password: '@k2so#',
-    port: 5432,
+  user: 'k2so',
+  host: '200.134.10.32',
+  database: 'k2so',
+  password: '@k2so#',
+  port: 5432,
 });
 
-function inserirAspas(a){
+function inserirAspas(a) {
   return "'" + a + "'";
 }
 
@@ -24,10 +24,21 @@ function formatarData(data) {
   a += "')";
   return a;
 }
+
+function inserirBoolean(a) {
+  if (a == "true") {
+    return 1;
+  }
+  if (a) {
+    return 1;
+  }
+  return 0;
+
+}
 exports.formatarData = formatarData;
 exports.conexao = pool;
 exports.inserirAspas = inserirAspas;
-
+exports.inserirBoolean = inserirBoolean;
 
 
 
