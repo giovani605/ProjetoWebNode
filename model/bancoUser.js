@@ -115,12 +115,18 @@ exports.buscarRelacaoGerente = buscarRelacaoGerente;
 
 // TODO 
 function buscarAmigos(idUser, callback) {
-    var query = "select * from gerente where usuario_idusuario = " + idUser;
+    var query = "select * from amigos a inner join usuario u on  a.usuario_idusuario1 = u.idusuario where usuario_idusuario = " + idUser;
     console.log(query);
     conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, [{}]);
+            return;
+        }
         console.log("Banco : ");
-        console.log(res.rows[0]);
-        callback(res.rows[0]);
+        console.log(res.rows);
+        callback(res.rows);
     });
 
 }
@@ -128,16 +134,43 @@ exports.buscarAmigos = buscarAmigos;
 
 // TODO 
 function buscarReservas(idUser, callback) {
-    var query = "select * from gerente where usuario_idusuario = " + idUser;
+    var query = "select * from amigos where usuario_idusuario = " + idUser;
     console.log(query);
     conexao.query(query, (err, res) => {
         console.log("Banco : ");
-        console.log(res.rows[0]);
-        callback(res.rows[0]);
+        console.log(res.rows);
+        if (res.rowCount == null) {
+            console.log("a pesquisa retornou vazio, logo 'res.rows[0]' = NULL");
+        }
+        callback(res.rows);
     });
 
 }
 exports.buscarReservas = buscarReservas;
+
+
+function inserirAmigos(idUser1, idUser2, callback) {
+    var query = "INSERT INTO amigos(usuario_idusuario, usuario_idusuario1) " +
+        " VALUES (" + idUser1 + "," + idUser2 + ") , (" + idUser2 + "," + idUser1+");";
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        console.log("Inserido : ");
+        console.log(res);
+        callback(res, true);
+        return;
+    });
+
+
+
+}
+exports.inserirAmigos = inserirAmigos;
+
 
 exports.buscarTodosUser = buscarTodosUser;
 exports.InserirUser = InserirUser;

@@ -17,7 +17,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/by-login/:login", (req, res, next) => {
 
-    bancoUser.buscarUsuarioLogin(req.params.login,(resultado) => {
+    bancoUser.buscarUsuarioLogin(req.params.login, (resultado) => {
         res.status(200).send({
             "mensagem": "ok",
             "dados": resultado
@@ -28,7 +28,7 @@ router.get("/by-login/:login", (req, res, next) => {
 router.get("/like/login/:login", (req, res, next) => {
     var login = req.params.login;
     console.log("login: " + JSON.stringify(req.body));
-    bancoUser.buscarUsuarioLoginLike(login,(resultado) => {
+    bancoUser.buscarUsuarioLoginLike(login, (resultado) => {
         res.status(200).send({
             "mensagem": "ok",
             "dados": resultado
@@ -48,7 +48,7 @@ router.get("/gerente", (req, res, next) => {
 });
 
 router.get("/gerente/:id", (req, res, next) => {
-    bancoUser.buscarGerenteIdUser(req.params.id,(resultado) => {
+    bancoUser.buscarGerenteIdUser(req.params.id, (resultado) => {
         console.log("Gerentes " + JSON.stringify(resultado));
         res.status(200).send({
             "mensagem": "ok",
@@ -82,7 +82,7 @@ router.post("/registrar/gerente", (req, res, next) => {
 });
 
 router.get("/amigos/:id", (req, res, next) => {
-    bancoUser.buscarAmigos(req.params.id,(resultado) => {
+    bancoUser.buscarAmigos(req.params.id, (resultado) => {
         console.log("Amigos " + JSON.stringify(resultado));
         res.status(200).send({
             "mensagem": "ok",
@@ -92,7 +92,7 @@ router.get("/amigos/:id", (req, res, next) => {
 });
 
 router.get("/reservas/:id", (req, res, next) => {
-    bancoUser.buscarReservas(req.params.id,(resultado) => {
+    bancoUser.buscarReservas(req.params.id, (resultado) => {
         console.log("Reservas " + JSON.stringify(resultado));
         res.status(200).send({
             "mensagem": "ok",
@@ -103,8 +103,9 @@ router.get("/reservas/:id", (req, res, next) => {
 
 // TODO recuperar os amigos
 router.get("/amigos/:id", (req, res, next) => {
-    bancoUser.buscarReservas(req.params.id,(resultado) => {
-        console.log("Reservas " + JSON.stringify(resultado));
+    console.log("sdadsadsa");
+    bancoUser.buscarAmigos(req.params.id, (resultado) => {
+        console.log("amigos " + JSON.stringify(resultado));
         res.status(200).send({
             "mensagem": "ok",
             "dados": resultado
@@ -114,11 +115,15 @@ router.get("/amigos/:id", (req, res, next) => {
 
 // TODO adicionar os amigos
 router.post("/adicionar/amigos", (req, res, next) => {
-    bancoUser.buscarReservas(req.params.id,(resultado) => {
-        console.log("Reservas " + JSON.stringify(resultado));
-        res.status(200).send({
+    var userId1 = req.body.userid1;
+    var userId2 = req.body.userid2;
+    console.log("adiconar amigos :" + userId1+ " " + userId2);
+    console.log(req.body);
+    bancoUser.inserirAmigos(userId1, userId2, (resultado,flag) => {
+         res.status(200).send({
             "mensagem": "ok",
-            "dados": resultado
+            "dados": resultado,
+            "flag" : flag
         });
     });
 });
