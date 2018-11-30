@@ -2,12 +2,12 @@
 
 const express = require('express');
 const router = express.Router();
-var bancoLocal = require("../model/bancoLocal");
+var bdLocal = require("../model/bancoLocal");
 
 //irá retornar todas as cidades
-router.get("/local/cidades", (req, res, next) => {
+router.get("/cidades", (req, res, next) => {
     // recuperar parametros da imagem
-    bancoLocal.getCidades((resultado, flag) => {
+    bdLocal.getCidades((resultado, flag) => {
         res.status(200).send({
             "mensagem": "OK",
             "flag": flag,
@@ -16,9 +16,9 @@ router.get("/local/cidades", (req, res, next) => {
     });
 });
 
-router.get("/local/estados", (req, res, next) => {
+router.get("/estados", (req, res, next) => {
     // recuperar parametros da imagem
-    bancoLocal.getEstados((resultado, flag) => {
+    bdLocal.getEstados((resultado, flag) => {
         res.status(200).send({
             "mensagem": "OK",
             "flag": flag,
@@ -28,9 +28,9 @@ router.get("/local/estados", (req, res, next) => {
 });
 
 //irá retornar todas as cidades com o id do estado passado
-router.get("/local/cidades/:id", (req, res, next) => {
+router.get("/cidades/:id", (req, res, next) => {
     // recuperar parametros da imagem
-    bancoLocal.getCidadesPorEstado(req.params.id,(resultado, flag) => {
+    bdLocal.getCidadesPorEstado(req.params.id,(resultado, flag) => {
         res.status(200).send({
             "mensagem": "OK",
             "flag": flag,
@@ -39,5 +39,16 @@ router.get("/local/cidades/:id", (req, res, next) => {
     });
 });
 
+router.get("/cidade/:id", (req, res, next) => {
+    // recuperar parametros da imagem
+    console.log('buscando cidade via ID');
+    bdLocal.getCidade(req.params.id,(resultado, flag) => {
+        res.status(200).send({
+            "mensagem": "OK",
+            "flag": flag,
+            "dados": resultado
+        });
+    });
+});
 
 module.exports = router;

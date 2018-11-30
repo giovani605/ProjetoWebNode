@@ -22,7 +22,7 @@ function getCidades(callback){
         callback(res.rows, true);
         return;
     });
-} exports.getCidades = this.getCidades; 
+} exports.getCidades = getCidades; 
 
 //retorna todas as cidades que pertençam ao id do estado passado por referência
 function getCidadesPorEstado(idEstado, callback){
@@ -43,11 +43,12 @@ function getCidadesPorEstado(idEstado, callback){
         callback(res.rows, true);
         return;
     });
-} exports.getCidadesPorEstado = this.getCidadesPorEstado;
+} exports.getCidadesPorEstado = getCidadesPorEstado;
 
 //retorna uma cidade especifica base em seu id
 function getCidade(idCidade, callback){
     var querry = "select id, nome, estado_id from cidades where id = " + idCidade + ";";
+    console.log("Querry de pesquisa: " + querry);
     conexao.query(querry, (err, res) => {
         if (err) {
             console.log("LOG: erro ao buscar a cidade\n\tlocal: bancoLocal.js\n\tfunction: getCidade");
@@ -60,11 +61,11 @@ function getCidade(idCidade, callback){
             callback(res.rows, false);
             return;            
         }
-        console.log("LOG: sucesso ao retornar a cidade\n\tlocal: bancoLocal.js\n\tfunction: getCidade\n\tretorno: " + res.rows + " cidade");
-        callback(res.rows, true);
+        console.log("LOG: sucesso ao retornar a cidade\n\tlocal: bancoLocal.js\n\tfunction: getCidade\n\tretornou: " + res);
+        callback(res.rows[0], true);
         return;
     });
-}
+} exports.getCidade = getCidade;
 
 //retorna todos os estado do banco
 function getEstados(callback){
@@ -85,7 +86,7 @@ function getEstados(callback){
         callback(res.rows, true);
         return;
     });
-} exports.getEstados = this.getEstados;
+} exports.getEstados = getEstados;
 
 
 //exemplo base
