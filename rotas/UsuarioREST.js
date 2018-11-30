@@ -101,6 +101,29 @@ router.get("/reservas/:id", (req, res, next) => {
     });
 });
 
+// TODO recuperar os amigos
+router.get("/amigos/:id", (req, res, next) => {
+    bancoUser.buscarReservas(req.params.id,(resultado) => {
+        console.log("Reservas " + JSON.stringify(resultado));
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resultado
+        });
+    });
+});
+
+// TODO adicionar os amigos
+router.post("/adicionar/amigos", (req, res, next) => {
+    bancoUser.buscarReservas(req.params.id,(resultado) => {
+        console.log("Reservas " + JSON.stringify(resultado));
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resultado
+        });
+    });
+});
+
+
 
 
 module.exports = router;
