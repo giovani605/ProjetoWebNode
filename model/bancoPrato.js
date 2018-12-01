@@ -26,12 +26,13 @@ function inserirPratoDia(dadosPratoDia, callback) {
 }
 exports.inserirPratoDia = inserirPratoDia;
 
-// corrigir a parte de inserir tag
-function inserirPrato(idRestaurante, idImagem, dadosPratos, callback) {
-    var query = "INSERT INTO pratos(restaurante_idrestaurante, tag_idtag, idimagem, nome,descricao) " +
-        "VALUES(" + idRestaurante + ",1," + inserirAspas(idImagem) + "," +
-        inserirAspas(dadosPratos["nome"]) + "," +
-        inserirAspas(dadosPratos["descricao"]) + ");"
+function inserirPratoTags(idPrato, listaTags, callback) {
+    var query = "INSERT INTO tag_prato (idtag,idpratos) values  ";
+    for (let a of listaTags) {
+        query += "(" + a["idtag"] + "," + idPrato + "),";
+    }
+    query += ";";
+    query = query.replace(",;", ";");
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
@@ -42,8 +43,36 @@ function inserirPrato(idRestaurante, idImagem, dadosPratos, callback) {
         }
         console.log("Inserido : ");
         console.log(res);
-        callback(res, true, "prato inserido com sucesso");
-        return;
+        callback(res, true);
+
+    });
+
+}
+
+
+// corrigir a parte de inserir tag
+function inserirPrato(idRestaurante, idImagem, dadosPratos, listaTags, callback) {
+    var query = "INSERT INTO pratos(restaurante_idrestaurante,  idimagem, nome,descricao) " +
+        "VALUES(" + idRestaurante + "," + inserirAspas(idImagem) + "," +
+        inserirAspas(dadosPratos["nome"]) + "," +
+        inserirAspas(dadosPratos["descricao"]) + ") RETURNING idpratos;"
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false, "Não foi possivel inserir o Prato");
+            return;
+        }
+        var idPrato = res.rows[0]["idpratos"];
+        inserirPratoTags(idPrato, listaTags, (res, flag) => {
+            console.log("Inserido : ");
+            console.log(res);
+            callback(idPrato, flag, "prato inserido com sucesso");
+            return;
+        })
+
+
     });
 }
 function buscarPratosRestaurante(idRestaurante, callback) {
@@ -86,7 +115,7 @@ function buscarPratosIdPrato(idPrato, callback) {
     });
 
 }
-function buscarTagTodas(callback){
+function buscarTagTodas(callback) {
     var query = "select * from tag ;"
     conexao.query(query, (err, res) => {
         if (err) {
@@ -105,7 +134,7 @@ function buscarTagTodas(callback){
         return;
     });
 }
-function buscarTagId(id,callback){
+function buscarTagId(id, callback) {
     var query = "select * from tag where idtag = " + id;
     conexao.query(query, (err, res) => {
         if (err) {
@@ -124,7 +153,7 @@ function buscarTagId(id,callback){
         return;
     });
 }
-exports.buscarTagId= buscarTagId;
+exports.buscarTagId = buscarTagId;
 exports.buscarTagTodas = buscarTagTodas;
 exports.buscarPratosIdPrato = buscarPratosIdPrato;
 exports.buscarPratosRestaurante = buscarPratosRestaurante;
