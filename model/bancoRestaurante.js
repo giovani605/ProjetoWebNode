@@ -30,7 +30,7 @@ function buscarRestauranteIdRestaurante(idRestaurante, callback) {
 }
 exports.buscarRestauranteIdRestaurante = buscarRestauranteIdRestaurante;
 
-function aprovarSimples(idPratoDia , callback){
+function aprovarSimples(idPratoDia, callback) {
     var query = "update prato_dia  set aprovado=1 where idprato_dia = " + idPratoDia;
     console.log(query);
     conexao.query(query, (err, res) => {
@@ -48,6 +48,29 @@ function aprovarSimples(idPratoDia , callback){
 
 }
 exports.aprovarSimples = aprovarSimples;
+
+function aprovarPeriodo(idPeriodo, callback) {
+    var query = "update periodo_ciclo  set aprovado=true where idperiodo = " + idPeriodo + ";";
+    query += "update prato_dia  set aprovado=1 where idperiodo = " + idPeriodo + ";";
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res);
+        callback(res, true);
+        return;
+    });
+
+}
+exports.aprovarPeriodo = aprovarPeriodo;
+
+
+
 
 
 function inserirRestaurante(idGerente, dadosRestaurante, callback) {
@@ -233,7 +256,7 @@ function buscarPratoDiaAprovarCiclo(idRestaurante, callback) {
     var query = "select pd.*,p.*,u.login from periodo_ciclo pd inner join pratos p " +
         " on pd.pratoid= p.idpratos inner join restaurante r on " +
         " r.idrestaurante = p.restaurante_idrestaurante " +
-        " inner join usuario u on u.idusuario = pd.responsavel " + 
+        " inner join usuario u on u.idusuario = pd.responsavel " +
         " where  r.idrestaurante = " + idRestaurante + " and pd.aprovado = false;"
     console.log(query);
     conexao.query(query, (err, res) => {

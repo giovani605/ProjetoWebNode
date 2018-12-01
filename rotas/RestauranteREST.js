@@ -137,6 +137,16 @@ router.get("/gerente/aprovar/periodo/:id", (req, res, next) => {
     });
 });
 
+router.post("/gerente/aprovar/periodo/:id", (req, res, next) => {
+    restauranteBO.aprovarPeriodo(req.params.id, req.body.idUser, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
+        })
+    });
+});
+
 
 
 

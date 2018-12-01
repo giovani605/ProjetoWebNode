@@ -105,7 +105,6 @@ router.get("/reservas/:id", (req, res, next) => {
 router.get("/amigos/:id", (req, res, next) => {
     console.log("sdadsadsa");
     bancoUser.buscarAmigos(req.params.id, (resultado) => {
-        console.log("amigos " + JSON.stringify(resultado));
         res.status(200).send({
             "mensagem": "ok",
             "dados": resultado
