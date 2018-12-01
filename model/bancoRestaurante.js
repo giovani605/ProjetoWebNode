@@ -78,7 +78,7 @@ function inserirRestaurante(idGerente, dadosRestaurante, callback) {
 
     var query = "INSERT INTO restaurante(gerente_idgerente," +
         "cidades_id, nome, descricao,telefone, rua, numero) " +
-        "VALUES(" + idGerente + ",1," + inserirAspas(dadosRestaurante["nome"]) + "," +
+        "VALUES(" + idGerente + ","+dadosRestaurante["cidades_id"]+"," + inserirAspas(dadosRestaurante["nome"]) + "," +
         inserirAspas(dadosRestaurante["descricao"]) +
         "," + inserirAspas(dadosRestaurante["telefone"]) +
         "," + inserirAspas(dadosRestaurante["rua"]) +

@@ -5,7 +5,7 @@ const conexao = Banco.conexao;
 
 //retorna todas as cidades do banco de dados
 function getCidades(callback){
-    var querry = "select id, nome, estado_id from cidades where nome in ('Curitiba');";
+    var querry = "select id, nome, estado_id from cidades where nome in ('Curitiba','Campinas');";
     conexao.query(querry, (err, res) => {
         if (err) {
             console.log("LOG: erro ao buscar todas as cidades\n\tlocal: bancoLocal.js\n\tfunction: getTodasCidades");
