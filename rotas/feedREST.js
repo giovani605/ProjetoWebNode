@@ -15,6 +15,18 @@ router.get("/", (req, res, next) => {
     });
 });
 
+router.post("/filtrar", (req, res, next) => {
+    var tags = req.body.tags;
+    console.log(tags);
+    bancoFeed.feedFiltro(tags,(resultado, flag)=>{
+        res.status(200).send({
+            "mensagem" : "ok",
+            "dados" : resultado,
+            "flag" : flag
+        })
+    });
+});
+
 
 
 module.exports = router;
