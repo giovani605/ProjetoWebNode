@@ -17,8 +17,9 @@ router.get("/", (req, res, next) => {
 
 router.post("/filtrar", (req, res, next) => {
     var tags = req.body.tags;
+    var idCidade = req.body.idCidade;
     console.log(tags);
-    bancoFeed.feedFiltro(tags,(resultado, flag)=>{
+    bancoFeed.feedFiltro(tags, idCidade, (resultado, flag)=>{
         res.status(200).send({
             "mensagem" : "ok",
             "dados" : resultado,
