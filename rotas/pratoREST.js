@@ -100,6 +100,30 @@ router.post("/periodo/ciclo", (req, res, next) => {
 
 
 
+router.get("/tag/:id", (req, res, next) => {
+    // recuperar parametros da imagem
+    bancoPrato.buscarTagId(req.params.id, (resultado, flag) => {
+        res.status(200).send({
+            "mensagem": "OK",
+            "flag": flag,
+            "dados": resultado
+        });
+    });
+});
+
+
+router.get("/todas/tag", (req, res, next) => {
+    // recuperar parametros da imagem
+    bancoPrato.buscarTagTodas((resultado, flag) => {
+        res.status(200).send({
+            "mensagem": "OK",
+            "flag": flag,
+            "dados": resultado
+        });
+    });
+});
+
+
 
 
 module.exports = router;

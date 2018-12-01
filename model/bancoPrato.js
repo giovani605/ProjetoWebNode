@@ -86,6 +86,46 @@ function buscarPratosIdPrato(idPrato, callback) {
     });
 
 }
+function buscarTagTodas(callback){
+    var query = "select * from tag ;"
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Selecionado tag : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+}
+function buscarTagId(id,callback){
+    var query = "select * from tag where idtag = " + id;
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Selecionado tag : ");
+        console.log(res.rows[0]);
+        callback(res.rows[0], true);
+        return;
+    });
+}
+exports.buscarTagId= buscarTagId;
+exports.buscarTagTodas = buscarTagTodas;
 exports.buscarPratosIdPrato = buscarPratosIdPrato;
 exports.buscarPratosRestaurante = buscarPratosRestaurante;
 exports.inserirPrato = inserirPrato;
