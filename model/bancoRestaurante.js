@@ -4,7 +4,7 @@ const Banco = require("./bancoDados");
 const conexao = Banco.conexao;
 var inserirAspas = Banco.inserirAspas;
 
-function buscarRestauranteIdRestaurante(idRestaurante, callback){
+function buscarRestauranteIdRestaurante(idRestaurante, callback) {
     var query = "SELECT * FROM restaurante where idrestaurante = " + idRestaurante;
     console.log(query);
     conexao.query(query, (err, res) => {
@@ -30,6 +30,24 @@ function buscarRestauranteIdRestaurante(idRestaurante, callback){
 }
 exports.buscarRestauranteIdRestaurante = buscarRestauranteIdRestaurante;
 
+function aprovarSimples(idPratoDia , callback){
+    var query = "update prato_dia  set aprovado=1 where idprato_dia = " + idPratoDia;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res);
+        callback(res, true);
+        return;
+    });
+
+}
+exports.aprovarSimples = aprovarSimples;
 
 
 function inserirRestaurante(idGerente, dadosRestaurante, callback) {
@@ -206,6 +224,72 @@ function buscarReservasRestaurante(idRestaurante, callback) {
 
 }
 exports.buscarReservasRestaurante = buscarReservasRestaurante;
+
+
+
+
+// TODO
+function buscarPratoDiaAprovarCiclo(idRestaurante, callback) {
+    var query = "select pd.*,p.*,u.login from periodo_ciclo pd inner join pratos p " +
+        " on pd.pratoid= p.idpratos inner join restaurante r on " +
+        " r.idrestaurante = p.restaurante_idrestaurante " +
+        " inner join usuario u on u.idusuario = pd.responsavel " + 
+        " where  r.idrestaurante = " + idRestaurante + " and pd.aprovado = false;"
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+
+}
+exports.buscarPratoDiaAprovarCiclo = buscarPratoDiaAprovarCiclo;
+
+
+
+// TODO
+function buscarPratoDiaSimplesAprovar(idRestaurante, callback) {
+    var query = "select pd.*,p.*,u.login from prato_dia pd inner join pratos p " +
+        " on pd.idprato = p.idpratos inner join restaurante r on " +
+        " r.idrestaurante = p.restaurante_idrestaurante " +
+        " inner join usuario u on u.idusuario = pd.responsavel where " +
+        " r.idrestaurante = " + idRestaurante + " and pd.aprovado = 0;";
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+
+}
+exports.buscarPratoDiaSimplesAprovar = buscarPratoDiaSimplesAprovar;
+
 
 
 exports.inserirColaborador = inserirColaborador;

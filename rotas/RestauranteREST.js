@@ -101,6 +101,45 @@ router.get("/gerente/colaboradores/:id", (req, res, next) => {
     });
 });
 
+// TODO 
+router.get("/gerente/aprovar/simples/:id", (req, res, next) => {
+    bancoRestaurante.buscarPratoDiaSimplesAprovar(req.params.id, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
+        })
+    });
+});
+
+router.post("/gerente/aprovar/simples/:id", (req, res, next) => {
+    restauranteBO.aprovarSimples(req.params.id, req.body.idUser, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
+        })
+    });
+});
+
+
+
+
+// Periodo
+
+router.get("/gerente/aprovar/periodo/:id", (req, res, next) => {
+    bancoRestaurante.buscarPratoDiaAprovarCiclo(req.params.id, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
+        })
+    });
+});
+
+
+
+
 
 router.get("/gerente/reservas/:id", (req, res, next) => {
     bancoRestaurante.buscarReservasRestaurante(req.params.id, (resposta, flag) => {

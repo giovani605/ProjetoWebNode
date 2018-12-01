@@ -130,6 +130,19 @@ function inserirPeriodo(idUser, dias, dadosPeriodo, callback) {
     })
 
 }
+
+function aprovarSimples(idPratoDia, idUser, callback) {
+    banco.isGerente(idUser, (dados, flag) => {
+        if(!flag){
+            callback("usuario não autorizado", flag);
+            return;
+        }
+        banco.aprovarSimples(idPratoDia, callback);
+    })
+
+}
+exports.aprovarSimples = aprovarSimples;
+
 exports.inserirPeriodo = inserirPeriodo;
 exports.inserirPeriodoPratoDia = inserirPeriodoPratoDia;
 exports.inserirColaborador = inserirColaborador;
