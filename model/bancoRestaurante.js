@@ -314,6 +314,64 @@ function buscarPratoDiaSimplesAprovar(idRestaurante, callback) {
 exports.buscarPratoDiaSimplesAprovar = buscarPratoDiaSimplesAprovar;
 
 
+function buscarPratoNome(nome , callback){
+    var query = "select p.*,r.nome rnome from pratos p inner join" +
+    " restaurante r on p.restaurante_idrestaurante = r.idrestaurante where p.nome like " + inserirAspas(nome+"%") +";";
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+}
+exports.buscarPratoNome = buscarPratoNome;
+
+
+function buscarRestauranteNome(nome , callback){
+    var query = "select * from restaurante where nome like " + inserirAspas(nome+"%") +";";
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+}
+exports.buscarRestauranteNome = buscarRestauranteNome;
+
+function pesquisarPratoRestaurante(nome ,callback){
+    buscarPratoNome(nome , (dados, flag) =>{
+        buscarRestauranteNome(nome, (res ,flag) => {
+            callback(dados,res,flag);
+        });
+    });
+}
+exports.pesquisarPratoRestaurante = pesquisarPratoRestaurante;
 
 exports.inserirColaborador = inserirColaborador;
 exports.buscarColaboradoresGerentes = buscarColaboradoresGerentes;

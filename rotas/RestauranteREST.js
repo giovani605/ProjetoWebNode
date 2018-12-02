@@ -36,7 +36,7 @@ router.get("/usuario/:id", (req, res, next) => {
                         "mensagem": "ok",
                         "flagDados": false,
                         "dados": resultado,
-                        "flagGerente" : false,
+                        "flagGerente": false,
                         "flagColaborador": false,
                         "idGerente": 0
                     });
@@ -49,7 +49,7 @@ router.get("/usuario/:id", (req, res, next) => {
 
 });
 
-router.get("/:id" ,(req, res, next) => {
+router.get("/:id", (req, res, next) => {
     bancoRestaurante.buscarRestauranteIdRestaurante(req.params.id, (resposta, flag) => {
         res.status(200).send({
             "mensagem": "ok",
@@ -168,14 +168,24 @@ router.post("/gerente/inserir/colaboradores", (req, res, next) => {
     var idUser = req.body.idUser;
 
     console.log("Inserindo Colaborador " + idGerente + " iduser " + idUser);
-    restauranteBO.inserirColaborador(idUser ,idGerente , idRestaurante, (resposta, flag) => {
+    restauranteBO.inserirColaborador(idUser, idGerente, idRestaurante, (resposta, flag) => {
         res.status(200).send({
             "mensagem": "ok",
             "resposta": resposta,
-            "flag" : flag
+            "flag": flag
         })
     });
 });
 
+router.get("/buscar/juntos/:nome", (req, res, next) => {
+    bancoRestaurante.pesquisarPratoRestaurante(req.params.nome, (pratos, restaurante, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "pratos": pratos,
+            "restaurantes": restaurante,
+            "flag": flag
+        });
+    });
+});
 
 module.exports = router;
