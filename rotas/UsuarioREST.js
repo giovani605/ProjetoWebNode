@@ -116,17 +116,55 @@ router.get("/amigos/:id", (req, res, next) => {
 router.post("/adicionar/amigos", (req, res, next) => {
     var userId1 = req.body.userid1;
     var userId2 = req.body.userid2;
-    console.log("adiconar amigos :" + userId1+ " " + userId2);
+    console.log("adiconar amigos :" + userId1 + " " + userId2);
     console.log(req.body);
-    bancoUser.inserirAmigos(userId1, userId2, (resultado,flag) => {
-         res.status(200).send({
+    bancoUser.inserirAmigos(userId1, userId2, (resultado, flag) => {
+        res.status(200).send({
             "mensagem": "ok",
             "dados": resultado,
-            "flag" : flag
+            "flag": flag
         });
     });
 });
 
+// notificacao
+router.post("/inserir/notificacao", (req, res, next) => {
+    var dados = req.body.dados
+    console.log(dados);
+    bancoUser.inserirNotificacao(dados, (resultado, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resultado,
+            "flag": flag
+        });
+    });
+});
+
+// TODO SE necessario
+router.get("/buscar/notificao/:id", (req, res, next) => {
+    var userId1 = req.body.userid1;
+    var userId2 = req.body.userid2;
+    console.log("adiconar amigos :" + userId1 + " " + userId2);
+    console.log(req.body);
+    bancoUser.inserirAmigos(userId1, userId2, (resultado, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resultado,
+            "flag": flag
+        });
+    });
+});
+
+
+router.get("/buscar/notificao/by-iduser/:id", (req, res, next) => {
+    bancoUser.buscarNotificacaoIdUser(req.params.id, (resultado, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resultado,
+            "flag": flag
+        });
+    });
+});
 
 
 

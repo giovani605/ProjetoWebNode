@@ -151,7 +151,7 @@ exports.buscarReservas = buscarReservas;
 
 function inserirAmigos(idUser1, idUser2, callback) {
     var query = "INSERT INTO amigos(usuario_idusuario, usuario_idusuario1) " +
-        " VALUES (" + idUser1 + "," + idUser2 + ") , (" + idUser2 + "," + idUser1+");";
+        " VALUES (" + idUser1 + "," + idUser2 + ") , (" + idUser2 + "," + idUser1 + ");";
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
@@ -175,6 +175,43 @@ exports.inserirAmigos = inserirAmigos;
 exports.buscarTodosUser = buscarTodosUser;
 exports.InserirUser = InserirUser;
 exports.buscarUsuarioLogin = buscarUsuarioLogin;
+
+
+// notificao 
+function inserirNotificacao(dados, callback) {
+    var query = "INSERT INTO notificacoes(idusuario, ativo, descricao , idremetente,link) " +
+        " VALUES (" + dados["idusuario"] + "," + dados["ativo"] + "," +
+        inserirAspas["descricao"] + "," + dados["idremetente"] + "," + inserirAspas(dados["link"])+");"
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        console.log("Inserido : ");
+        console.log(res);
+        callback(res, true);
+        return;
+    });
+}
+function buscarNotificacaoIdUser(idUser, callback) {
+    var query = "select * from notificacoes where idusuario = " + idUser;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        console.log("Banco : ");
+        console.log(res.rows);
+        if (res.rowCount == null) {
+            console.log("a pesquisa retornou vazio, logo 'res.rows[0]' = NULL");
+            callback(res.rows, false);
+            return;
+        }
+        callback(res.rows, true);
+    });
+}
+exports.buscarNotificacaoIdUser = buscarNotificacaoIdUser;
+exports.inserirNotificacao = inserirNotificacao;
 
 
 // NAO TESTADA AINDA
