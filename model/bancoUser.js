@@ -181,7 +181,7 @@ exports.buscarUsuarioLogin = buscarUsuarioLogin;
 function inserirNotificacao(dados, callback) {
     var query = "INSERT INTO notificacoes(idusuario, ativo, descricao , idremetente,link) " +
         " VALUES (" + dados["idusuario"] + "," + dados["ativo"] + "," +
-        inserirAspas["descricao"] + "," + dados["idremetente"] + "," + inserirAspas(dados["link"])+");"
+        inserirAspas(dados["descricao"]) + "," + dados["idremetente"] + "," + inserirAspas(dados["link"])+");"
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
