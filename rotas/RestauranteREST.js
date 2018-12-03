@@ -188,4 +188,24 @@ router.get("/buscar/juntos/:nome", (req, res, next) => {
     });
 });
 
+
+
+// todo
+router.post("/gerente/inserir/promocao", (req, res, next) => {
+    var idGerente = req.body.idGerente;
+    var idRestaurante = req.body.idRestaurante;
+    var dadosPrato = req.body.prato;
+    var codigo = req.bpdy.codigo;
+
+    console.log("Inserindo promocao " + idGerente + " iduser " + idUser + " codigo "+ codigo);
+    console.log(dadosPrato);
+    restauranteBO.inserirCodigoPromocao(idUser, idGerente, idRestaurante, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "resposta": resposta,
+            "flag": flag
+        })
+    });
+});
+
 module.exports = router;
