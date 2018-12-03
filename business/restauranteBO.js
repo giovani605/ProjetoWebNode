@@ -7,14 +7,17 @@ var inserirBoolean = b.inserirBoolean;
 var conexao = b.conexao;
 
 
+
+
+
 //todo
-function inserirCodigoPromocao(idUser, idGerente, idRestaurente, callback) {
+function inserirCodigoPromocao(codigo, idGerente, idprato, callback) {
     // testar o id de gerente
     banco.isGerente(idGerente, (dados, flag) => {
         if (flag) {
-            banco.inserirColaborador(idUser, idGerente, callback);
+            banco.inserirCodigoPromocaoSql(codigo, idGerente, idprato ,callback);
         } else {
-            callback({}, false);
+            callback({}, false,"Você não tem permissão");
         }
     });
 

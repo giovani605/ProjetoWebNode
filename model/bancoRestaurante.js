@@ -373,6 +373,26 @@ function pesquisarPratoRestaurante(nome ,callback){
 }
 exports.pesquisarPratoRestaurante = pesquisarPratoRestaurante;
 
+function inserirCodigoPromocaoSql(codigo,idGerente,idprato,callback){
+    var query = "INSERT INTO promocao(descricao, valida, codigo, idgerente, idprato) "+
+    "VALUES ('promocao', 1,"+inserirAspas(codigo)+ ","+ idGerente +","+ idprato+ ");";
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false, "Codigo ao inserir o codigo");
+            return;
+        }
+        console.log("Inserido : ");
+        console.log(res);
+        callback(res, true, "Codigo inserido com sucesso");
+        return;
+    });
+}
+exports.inserirCodigoPromocaoSql = inserirCodigoPromocaoSql;
+
+
 exports.inserirColaborador = inserirColaborador;
 exports.buscarColaboradoresGerentes = buscarColaboradoresGerentes;
 exports.isColaborador = isColaborador;

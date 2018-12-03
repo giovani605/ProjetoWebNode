@@ -195,11 +195,11 @@ router.post("/gerente/inserir/promocao", (req, res, next) => {
     var idGerente = req.body.idGerente;
     var idRestaurante = req.body.idRestaurante;
     var dadosPrato = req.body.prato;
-    var codigo = req.bpdy.codigo;
+    var codigo = req.body.codigo;
 
-    console.log("Inserindo promocao " + idGerente + " iduser " + idUser + " codigo "+ codigo);
+    console.log("Inserindo promocao " + idGerente + " idprato " +  dadosPrato["idpratos"] +" codigo "+ codigo);
     console.log(dadosPrato);
-    restauranteBO.inserirCodigoPromocao(idUser, idGerente, idRestaurante, (resposta, flag) => {
+    restauranteBO.inserirCodigoPromocao(codigo, idGerente, dadosPrato["idpratos"], (resposta, flag) => {
         res.status(200).send({
             "mensagem": "ok",
             "resposta": resposta,
