@@ -6,7 +6,7 @@ var inserirBoolean = Banco.inserirBoolean;
 
 // testar
 function inserirPratoDia(dadosPratoDia, callback) {
-    var query = "INSERT INTO prato_dia( idprato, dia, responsavel, aprovado) " +
+    var query = "INSERT INTO prato_dia( idprato, dia, responsavel, aprovado, idperiodo) " +
         "VALUES (" + dadosPratoDia["idPrato"] + "," + formatarData(new Date(dadosPratoDia["data"])) + "," +
         inserirAspas(dadosPratoDia["responsavel"]) + "," +
         inserirBoolean(dadosPratoDia["aprovado"]) + ", null);"
