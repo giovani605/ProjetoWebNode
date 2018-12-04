@@ -208,4 +208,21 @@ router.post("/gerente/inserir/promocao", (req, res, next) => {
     });
 });
 
+
+
+router.post("/seguir/usuario", (req, res, next) => {
+    var idUser = req.body.idUser;
+    var idRestaurante = req.body.idRestaurante;
+    console.log("Seguir restaurante " + idUser + " idRestaurante " +  idRestaurante);
+    console.log(dadosPrato);
+    bancoRestaurante.seguirRestaurante(idUser,idRestaurante, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "resposta": resposta,
+            "flag": flag
+        })
+    });
+});
+
+
 module.exports = router;

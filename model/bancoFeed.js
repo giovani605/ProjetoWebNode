@@ -65,4 +65,34 @@ function feedFiltro(listaTags, idCidade, callback) {
 }
 exports.feedFiltro = feedFiltro;
 
+// todo
+function feedSeguir(listaTags, idCidade, callback) {
+    var query = "select *,p.nome pnome from prato_dia pd inner join  pratos p on pd.idprato = p.idpratos " +
+        "inner join restaurante r on r.idrestaurante = p.restaurante_idrestaurante inner join " +
+        "( select count(*) conta,pd.idprato_dia from prato_dia pd inner join " +
+        " pratos p on p.idpratos = pd.idprato  inner join tag_prato  pt on " +
+        " pt.idpratos = p.idpratos  where pt.idtag in " + gerarIn(listaTags) + " group by pd.idprato_dia ) " +
+        " a on pd.idprato_dia = a.idprato_dia where r.cidades_id = " + idCidade + "order by a.conta desc;"
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Selecionado pratos : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+
+}
+exports.feedSeguir = feedSeguir;
+
+
 exports.feedGeral = feedGeral;
