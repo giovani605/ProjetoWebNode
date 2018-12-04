@@ -5,7 +5,7 @@ var formatarData = Banco.formatarData;
 
 // implementacao do feed inicial
 function feedGeral(callback) {
-    var query = "select * from prato_dia pd inner join pratos p on p.idpratos = pd.idprato ";
+    var query = "select * from prato_dia pd inner join pratos p on p.idpratos = pd.idprato where pd.aprovado = 1";
     conexao.query(query, (err, res) => {
         if (err) {
             console.log("problemas : ");
@@ -43,7 +43,7 @@ function feedFiltro(listaTags, idCidade, callback) {
         "( select count(*) conta,pd.idprato_dia from prato_dia pd inner join " +
         " pratos p on p.idpratos = pd.idprato  inner join tag_prato  pt on " +
         " pt.idpratos = p.idpratos  where pt.idtag in " + gerarIn(listaTags) + " group by pd.idprato_dia ) " +
-        " a on pd.idprato_dia = a.idprato_dia where r.cidades_id = " + idCidade + "order by a.conta desc;"
+        " a on pd.idprato_dia = a.idprato_dia where r.cidades_id = " + idCidade + " and pd.aprovado = 1 order by a.conta desc;"
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
@@ -70,7 +70,7 @@ function feedSeguir(idUser, callback) {
     var query = "select pd.*,r.*,p.nome pnome,p.idimagem,p.restaurante_idrestaurante from prato_dia pd inner join " +
     " pratos p on pd.idprato = p.idpratos  inner join restaurante r on " +
     " r.idrestaurante = p.restaurante_idrestaurante inner join seguir s on " + 
-    " s.restaurante_idrestaurante = r.idrestaurante where s.usuario_idusuario = " + idUser;
+    " s.restaurante_idrestaurante = r.idrestaurante where s.usuario_idusuario = " + idUser +" and pd.aprovado = 1"; 
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
