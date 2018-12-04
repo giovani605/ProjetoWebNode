@@ -415,6 +415,32 @@ function seguirRestaurante(idUser, idRestaurante, callback){
 }
 exports.seguirRestaurante = seguirRestaurante;
 
+function buscarCodigosIdRestaurante(idRestaurante, callback){
+    var query = "select p.codigo,pt.nome from promocao p inner join" +
+    " pratos pt on pt.idpratos = p.idprato where pt.restaurante_idrestaurante =  " + idRestaurante;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            console.log("Resultado : ");
+            console.log(res.rows);
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+}
+exports.buscarCodigosIdRestaurante = buscarCodigosIdRestaurante;
+
+
 exports.inserirColaborador = inserirColaborador;
 exports.buscarColaboradoresGerentes = buscarColaboradoresGerentes;
 exports.isColaborador = isColaborador;

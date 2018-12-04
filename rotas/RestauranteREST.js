@@ -225,4 +225,17 @@ router.post("/seguir/usuario", (req, res, next) => {
 });
 
 
+
+router.get("/buscar/codigos/:id", (req, res, next) => {
+    console.log("Recuperar codigo restaurante " + req.params.id );
+    bancoRestaurante.buscarCodigosIdRestaurante(req.params.id, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
+        })
+    });
+});
+
+
 module.exports = router;
