@@ -29,11 +29,9 @@ router.post("/filtrar", (req, res, next) => {
 });
 
 // TODO
-router.post("/seguindo", (req, res, next) => {
-    var tags = req.body.tags;
-    var idCidade = req.body.idCidade;
-    console.log(tags);
-    bancoFeed.feedSeguir(tags, idCidade, (resultado, flag)=>{
+router.get("/seguindo/:id", (req, res, next) => {
+    console.log("feed seguir " + req.params.id);
+    bancoFeed.feedSeguir(req.params.id, (resultado, flag)=>{
         res.status(200).send({
             "mensagem" : "ok",
             "dados" : resultado,

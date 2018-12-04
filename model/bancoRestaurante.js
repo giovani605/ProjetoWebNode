@@ -78,7 +78,7 @@ function inserirRestaurante(idGerente, dadosRestaurante, callback) {
 
     var query = "INSERT INTO restaurante(gerente_idgerente," +
         "cidades_id, nome, descricao,telefone, rua, numero) " +
-        "VALUES(" + idGerente + ","+dadosRestaurante["cidades_id"]+"," + inserirAspas(dadosRestaurante["nome"]) + "," +
+        "VALUES(" + idGerente + "," + dadosRestaurante["cidades_id"] + "," + inserirAspas(dadosRestaurante["nome"]) + "," +
         inserirAspas(dadosRestaurante["descricao"]) +
         "," + inserirAspas(dadosRestaurante["telefone"]) +
         "," + inserirAspas(dadosRestaurante["rua"]) +
@@ -314,9 +314,9 @@ function buscarPratoDiaSimplesAprovar(idRestaurante, callback) {
 exports.buscarPratoDiaSimplesAprovar = buscarPratoDiaSimplesAprovar;
 
 
-function buscarPratoNome(nome , callback){
+function buscarPratoNome(nome, callback) {
     var query = "select p.*,r.nome rnome from pratos p inner join" +
-    " restaurante r on p.restaurante_idrestaurante = r.idrestaurante where p.nome like " + inserirAspas(nome+"%") +";";
+        " restaurante r on p.restaurante_idrestaurante = r.idrestaurante where p.nome like " + inserirAspas(nome + "%") + ";";
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
@@ -340,8 +340,8 @@ function buscarPratoNome(nome , callback){
 exports.buscarPratoNome = buscarPratoNome;
 
 
-function buscarRestauranteNome(nome , callback){
-    var query = "select * from restaurante where nome like " + inserirAspas(nome+"%") +";";
+function buscarRestauranteNome(nome, callback) {
+    var query = "select * from restaurante where nome like " + inserirAspas(nome + "%") + ";";
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
@@ -364,18 +364,18 @@ function buscarRestauranteNome(nome , callback){
 }
 exports.buscarRestauranteNome = buscarRestauranteNome;
 
-function pesquisarPratoRestaurante(nome ,callback){
-    buscarPratoNome(nome , (dados, flag) =>{
-        buscarRestauranteNome(nome, (res ,flag) => {
-            callback(dados,res,flag);
+function pesquisarPratoRestaurante(nome, callback) {
+    buscarPratoNome(nome, (dados, flag) => {
+        buscarRestauranteNome(nome, (res, flag) => {
+            callback(dados, res, flag);
         });
     });
 }
 exports.pesquisarPratoRestaurante = pesquisarPratoRestaurante;
 
-function inserirCodigoPromocaoSql(codigo,idGerente,idprato,callback){
-    var query = "INSERT INTO promocao(descricao, valida, codigo, idgerente, idprato) "+
-    "VALUES ('promocao', 1,"+inserirAspas(codigo)+ ","+ idGerente +","+ idprato+ ");";
+function inserirCodigoPromocaoSql(codigo, idGerente, idprato, callback) {
+    var query = "INSERT INTO promocao(descricao, valida, codigo, idgerente, idprato) " +
+        "VALUES ('promocao', 1," + inserirAspas(codigo) + "," + idGerente + "," + idprato + ");";
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
@@ -393,21 +393,21 @@ function inserirCodigoPromocaoSql(codigo,idGerente,idprato,callback){
 exports.inserirCodigoPromocaoSql = inserirCodigoPromocaoSql;
 
 // TODO
-function seguirRestaurante(idUser, idRestaurante, callback){
+function seguirRestaurante(idUser, idRestaurante, callback) {
 
-    var query = "INSERT INTO promocao(descricao, valida, codigo, idgerente, idprato) "+
-    "VALUES ('promocao', 1,"+inserirAspas(codigo)+ ","+ idGerente +","+ idprato+ ");";
+    var query = "INSERT INTO seguir(usuario_idusuario, restaurante_idrestaurante) " +
+        "VALUES (" + idUser + "," + idRestaurante + ");";
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
             console.log("problemas : ");
             console.log(err);
-            callback(err, false, "Codigo ao inserir o codigo");
+            callback(err, false, "seguirRestaurante falha");
             return;
         }
         console.log("Inserido : ");
         console.log(res);
-        callback(res, true, "Codigo inserido com sucesso");
+        callback(res, true, "Seguir resturante com sucesso");
         return;
     });
 
@@ -415,9 +415,9 @@ function seguirRestaurante(idUser, idRestaurante, callback){
 }
 exports.seguirRestaurante = seguirRestaurante;
 
-function buscarCodigosIdRestaurante(idRestaurante, callback){
+function buscarCodigosIdRestaurante(idRestaurante, callback) {
     var query = "select p.codigo,pt.nome from promocao p inner join" +
-    " pratos pt on pt.idpratos = p.idprato where pt.restaurante_idrestaurante =  " + idRestaurante;
+        " pratos pt on pt.idpratos = p.idprato where pt.restaurante_idrestaurante =  " + idRestaurante;
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
