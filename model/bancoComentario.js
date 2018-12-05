@@ -124,3 +124,62 @@ function buscarNotaPrato(idPrato, callback) {
     });
 } exports.buscarNotaPrato = buscarNotaPrato;
 
+function totalSeguidoresRestaurante(idRestaurante, callback) {
+    var query = "select count(seguir.usuario_idusuario) as total from seguir where restaurante_idrestaurante = " + idRestaurante + ";";
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Retornando o total de seguidores: ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+} exports.totalSeguidoresRestaurante = totalSeguidoresRestaurante;
+
+function totalAvaliacoesRestaurante(idRestaurante, callback) {
+    var query = "select count(comentarios_restaurantes.idcomentario) as total from comentarios_restaurantes where comentarios_restaurantes.restaurante_idrestaurante = " + idRestaurante + ";";
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Retornando o total de avaliações de restaurante: ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+} exports.totalAvaliacoesRestaurante = totalAvaliacoesRestaurante;
+
+function totalAvaliacoesPrato(idPrato, callback) {
+    var query = "select count(comentarios_pratos.idcomentarios_pratos) as total from comentarios_pratos where comentarios_pratos.idcomentarios_pratos = " + idPrato + ";";
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Retornando o total de avaliações do prato: ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+} exports.totalAvaliacoesPrato = totalAvaliacoesPrato;

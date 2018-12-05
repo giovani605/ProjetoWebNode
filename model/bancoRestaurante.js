@@ -158,6 +158,7 @@ function isColaborador(idUser, callback) {
         return;
     });
 }
+
 function isGerente(idUser, callback) {
     var query = "SELECT * FROM gerente where usuario_idusuario = " + idUser;
     console.log(query);
@@ -180,6 +181,7 @@ function isGerente(idUser, callback) {
         return;
     });
 }
+
 function buscarColaboradoresGerentes(idGerente, callback) {
     var query = "select * from colaborador c inner join usuario u on c.idusuario = u.idusuario where idgerente =  " + idGerente;
     console.log(query);

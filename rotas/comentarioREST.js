@@ -47,6 +47,39 @@ router.get("/media/restaurante/:id", (req, res, next) => {
     });
 });
 
+router.get("/total/seguidores/restaurante/:id", (req, res, next) => {
+    console.log('Buscando total de seguidores do restaurante');
+    bancoComentario.totalSeguidoresRestaurante(req.params.id ,(resultado, flag)=>{
+        res.status(200).send({
+            "mensagem" : "ok",
+            "dados" : resultado,
+            "flag" : flag
+        })
+    });
+});
+
+router.get("/total/avaliacoes/restaurante/:id", (req, res, next) => {
+    console.log('Buscando total de avaliações do restaurante');
+    bancoComentario.totalAvaliacoesRestaurante(req.params.id ,(resultado, flag)=>{
+        res.status(200).send({
+            "mensagem" : "ok",
+            "dados" : resultado,
+            "flag" : flag
+        })
+    });
+});
+
+router.get("/total/avaliacoes/prato/:id", (req, res, next) => {
+    console.log('Buscando total de avaliações do prato');
+    bancoComentario.totalAvaliacoesPrato(req.params.id ,(resultado, flag)=>{
+        res.status(200).send({
+            "mensagem" : "ok",
+            "dados" : resultado,
+            "flag" : flag
+        })
+    });
+});
+
 router.post("/inserir/prato", (req, res, next) => {
     var idUsuario = req.body.idUsuario;
     var idPrato = req.body.idObjeto;
