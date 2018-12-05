@@ -21,3 +21,48 @@ function buscarReservasPorUsuario(idUser, callback) {
     });
 
 } exports.buscarReservasPorUsuario = buscarReservasPorUsuario;
+
+function validaPromocao(idPrato, codigo, callback) {
+
+    var query = "select promocao.promocaoid from promocao where codigo = '" + codigo + 
+    "' and promocao.idprato = " + idPrato + " limit 1;";
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, "Não foi possivel buscar as promoções");
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows);
+        return;
+    });
+
+} exports.validaPromocao = validaPromocao;
+
+function insertReserva(idPrato, idUsuario, data, idPromocao, callback) {
+
+    var query = "insert into reservas (idprato, idusuario, data, idpromocao) values (" + idPrato + 
+    ", " + idUsuario + ", '" + data; 
+    if(idPromocao == null){
+        query = query + "', null );";
+    }else{
+        query = query + "', " + idPromocao + " );";
+    }
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, "Não foi possivel buscar as promoções");
+            return;
+        }
+        console.log("Resultado : ");
+        console.log(res.rows);
+        callback(res.rows);
+        return;
+    });
+
+} exports.validaPromocao = validaPromocao

@@ -14,4 +14,16 @@ router.get("/buscarReservasPorUsuario/:id" ,(req, res, next) => {
     });
 });
 
+router.post("/inserir/" ,(req, res, next) => {
+    var idUsuario = rq.body.idUsuario;
+
+    bancoReserva.validaPromocao(req.params.id, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
+        })
+    });
+});
+
 module.exports = router;
