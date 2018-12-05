@@ -136,7 +136,8 @@ function buscarTagTodas(callback) {
 }
 
 function buscarTagsPrato(id, callback) {
-    var query = "select * from tag where idtag in (select tag_prato.idtag from tag_prato where idpratos = " + id + ");";
+    var query = "select t.* from tag t inner join tag_prato tp on t.idtag = tp.idtag where tp.idpratos =  " + id ;
+    console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
             console.log("problemas : ");
@@ -154,7 +155,7 @@ function buscarTagsPrato(id, callback) {
         return;
     });
 }
-
+exports.buscarTagsPrato = buscarTagsPrato;
 
 function buscarTagId(id, callback) {
     var query = "select * from tag where idtag = " + id;
