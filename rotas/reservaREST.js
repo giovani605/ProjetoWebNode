@@ -14,6 +14,16 @@ router.get("/buscarReservasPorUsuario/:id", (req, res, next) => {
     });
 });
 
+router.get("/buscarReservasPorRestaurante/:id", (req, res, next) => {
+    bancoReserva.buscarReservasPorRestaurante(req.params.id, (resposta, flag) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resposta,
+            "flag": flag
+        })
+    });
+});
+
 router.post("/inserir", (req, res, next) => {
     var idPrato = req.body.idPrato;
     var idUser = req.body.idUser;
