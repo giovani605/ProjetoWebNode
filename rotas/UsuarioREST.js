@@ -15,6 +15,18 @@ router.get("/", (req, res, next) => {
 
 });
 
+
+router.get("/usuario/by-userid/:id", (req, res, next) => {
+
+    bancoUser.buscarUsuarioIduser(req.params.id,(resultado) => {
+        res.status(200).send({
+            "mensagem": "ok",
+            "dados": resultado
+        });
+    });
+
+});
+
 router.get("/by-login/:login", (req, res, next) => {
 
     bancoUser.buscarUsuarioLogin(req.params.login, (resultado) => {

@@ -61,6 +61,21 @@ function buscarUsuarioLogin(login, callback) {
     });
 }
 
+function buscarUsuarioIduser(IdUser, callback) {
+    var query = "select * from usuario where idusuario =" + IdUser;
+    console.log(query);
+    conexao.query(query, (err, res) => {
+        console.log("Banco : ");
+        console.log(res.rows[0]);
+        if (res.rowCount == null) {
+            console.log("a pesquisa retornou vazio, logo 'res.rows[0]' = NULL");
+        }
+        callback(res.rows[0]);
+    });
+}
+exports.buscarUsuarioIduser = buscarUsuarioIduser;
+
+
 // Dados no seguinte formato
 
 function InserirUser(dados, callback) {
