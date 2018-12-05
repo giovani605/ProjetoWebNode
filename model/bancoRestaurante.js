@@ -88,12 +88,12 @@ function inserirRestaurante(idGerente, dadosRestaurante, callback) {
         if (err) {
             console.log("problemas : ");
             console.log(err);
-            callback(err, "Não foi possivel inserir o Restaurante");
+            callback(err,false, "Não foi possivel inserir o Restaurante");
             return;
         }
         console.log("Inserido : ");
         console.log(res);
-        callback(res, "Restaurante inserido com sucesso");
+        callback(res, true, "Restaurante inserido com sucesso");
         return;
     });
 }

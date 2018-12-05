@@ -63,10 +63,11 @@ router.post("/registrar", (req, res, next) => {
     var dadosRestaurante = req.body.dadosRestaurante;
 
     console.log("Inserindo Restaurante " + idGerente + " dados " + dadosRestaurante);
-    bancoRestaurante.inserirRestaurante(idGerente, dadosRestaurante, (resposta) => {
+    bancoRestaurante.inserirRestaurante(idGerente, dadosRestaurante, (resposta, flag) => {
         res.status(200).send({
             "mensagem": "ok",
-            "resposta": resposta
+            "resposta": resposta,
+            "flag": flag
         })
     });
 });
