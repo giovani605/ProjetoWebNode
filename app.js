@@ -9,6 +9,7 @@ var pratoREST = require("./rotas/pratoREST");
 var feedREST = require("./rotas/feedREST");
 var localREST = require("./rotas/LocalREST");
 var reservaRest = require("./rotas/reservaREST");
+var comentarioRest = require("./rotas/comentarioREST");
 
 // para poder mandar dados para o angular
 app.use("/",bodyParser.json());
@@ -34,6 +35,7 @@ app.use("/prato", pratoREST);
 app.use("/feed", feedREST);
 app.use("/local", localREST);
 app.use("/reserva", reservaRest);
+app.use("/comentario",comentarioRest);
 
 
 module.exports = app;
