@@ -70,7 +70,7 @@ function feedSeguir(idUser, callback) {
     var query = "select pd.*,r.*,p.nome pnome,p.idimagem,p.restaurante_idrestaurante from prato_dia pd inner join " +
     " pratos p on pd.idprato = p.idpratos  inner join restaurante r on " +
     " r.idrestaurante = p.restaurante_idrestaurante inner join seguir s on " + 
-    " s.restaurante_idrestaurante = r.idrestaurante where s.usuario_idusuario = " + idUser +" and pd.aprovado = 1" + " order by dia"; 
+    " s.restaurante_idrestaurante = r.idrestaurante where s.usuario_idusuario = " + idUser +" and pd.aprovado = 1 and dia = date_trunc('day',now())" + " order by dia"; 
     console.log(query);
     conexao.query(query, (err, res) => {
         if (err) {
