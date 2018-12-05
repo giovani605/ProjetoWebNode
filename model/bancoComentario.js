@@ -165,7 +165,7 @@ function totalAvaliacoesRestaurante(idRestaurante, callback) {
 } exports.totalAvaliacoesRestaurante = totalAvaliacoesRestaurante;
 
 function totalAvaliacoesPrato(idPrato, callback) {
-    var query = "select count(comentarios_pratos.idcomentarios_pratos) as total from comentarios_pratos where comentarios_pratos.idcomentarios_pratos = " + idPrato + ";";
+    var query = "select count(comentarios_pratos.idcomentarios_pratos) as total from comentarios_pratos where comentarios_pratos.pratos_idpratos = " + idPrato + ";";
     conexao.query(query, (err, res) => {
         if (err) {
             console.log("problemas : ");

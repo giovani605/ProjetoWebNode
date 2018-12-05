@@ -134,6 +134,28 @@ function buscarTagTodas(callback) {
         return;
     });
 }
+
+function buscarTagsPrato(id, callback) {
+    var query = "select * from tag where idtag in (select tag_prato.idtag from tag_prato where idpratos = " + id + ");";
+    conexao.query(query, (err, res) => {
+        if (err) {
+            console.log("problemas : ");
+            console.log(err);
+            callback(err, false);
+            return;
+        }
+        if (res.rows.length == 0) {
+            callback(res.rows, false);
+            return;
+        }
+        console.log("Selecionado tags do prato : ");
+        console.log(res.rows);
+        callback(res.rows, true);
+        return;
+    });
+}
+
+
 function buscarTagId(id, callback) {
     var query = "select * from tag where idtag = " + id;
     conexao.query(query, (err, res) => {

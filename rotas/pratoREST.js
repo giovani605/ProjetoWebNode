@@ -125,7 +125,17 @@ router.get("/todas/tag", (req, res, next) => {
     });
 });
 
-
+//alterars
+router.get("/tags/:id", (req, res, next) => {
+    // recuperar parametros da imagem
+    bancoPrato.buscarTagsPrato(req.params.id, (resultado, flag) => {
+        res.status(200).send({
+            "mensagem": "OK",
+            "flag": flag,
+            "dados": resultado
+        });
+    });
+});
 
 
 module.exports = router;
